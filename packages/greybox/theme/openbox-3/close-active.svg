@@ -1,0 +1,22 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_2)">
+<rect width="24" height="24" rx="4" fill="#FF6262" fill-opacity="0.3"/>
+<mask id="mask0_1_2" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="4" width="24" height="24">
+<rect x="4" y="4" width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_1_2)">
+<path d="M7.8 17.25L6.75 16.2L10.95 12L6.75 7.8L7.8 6.75L12 10.95L16.2 6.75L17.25 7.8L13.05 12L17.25 16.2L16.2 17.25L12 13.05L7.8 17.25Z" fill="white"/>
+</g>
+<ellipse cx="12" cy="-0.5" rx="28" ry="14.5" fill="url(#paint0_linear_1_2)"/>
+</g>
+<rect x="0.5" y="0.5" width="23" height="23" rx="3.5" stroke="white" stroke-opacity="0.5"/>
+<defs>
+<linearGradient id="paint0_linear_1_2" x1="12" y1="-15" x2="12" y2="14" gradientUnits="userSpaceOnUse">
+<stop offset="0.5" stop-color="white" stop-opacity="0"/>
+<stop offset="1" stop-color="#D9D9D9" stop-opacity="0.25"/>
+</linearGradient>
+<clipPath id="clip0_1_2">
+<rect width="24" height="24" rx="4" fill="white"/>
+</clipPath>
+</defs>
+</svg>
