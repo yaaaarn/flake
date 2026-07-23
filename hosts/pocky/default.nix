@@ -21,7 +21,18 @@
       HandleLidSwitchExternalPower = "ignore";
       HandleLidSwitchDocked = "ignore";
     };
-    mbpfan.enable = true;
+    mbpfan = {
+      enable = true;
+      aggressive = true;
+      settings = {
+        general = {
+          low_temp = 50;
+          high_temp = 60;
+          max_temp = 75;
+          polling_interval = 1;
+        };
+      };
+    };
   };
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -74,42 +85,6 @@
       RemainAfterExit = true;
     };
   };
-  preservation = {
-    enable = true;
-    preserveAt."/persistent" = {
-      files = [
-        {
-          file = "/etc/machine-id";
-          inInitrd = true;
-        }
-      ];
-      directories = [
-        "/var/lib/systemd/timers"
-        "/var/lib/nixos"
-        "/var/log"
-      ];
-      users.user = {
-        directories = [
-          {
-            directory = ".ssh";
-            mode = "0700";
-          }
-          ".local/state/nvim"
-          ".local/state/wireplumber"
-          ".local/state/syncthing"
-          ".local/state/nix"
-          ".local/share/osu"
-          ".config/equibop"
-          ".mozilla"
-          ".gnupg"
-          "mail"
-          "Documents"
-          "Music"
-          "Projects"
-          "flake"
-        ];
-      };
-    };
-  };
-  systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
+
+  unravelled.preservation.enable = true;
 }

@@ -40,7 +40,7 @@ in
     };
 
     localsend = {
-      enable = mkIf config.unravelled.profiles.graphical.enable true;
+      enable = config.unravelled.profiles.graphical.enable;
       openFirewall = true;
     };
 
@@ -53,10 +53,10 @@ in
     openssh.enable = true;
 
     udisks2.enable = true;
-    gvfs.enable = mkIf config.unravelled.profiles.graphical.enable true;
+    gvfs.enable = config.unravelled.profiles.graphical.enable;
     devmon.enable = true;
 
-    flatpak.enable = mkIf config.unravelled.profiles.full.enable true;
+    flatpak.enable = config.unravelled.profiles.full.enable;
 
     auto-cpufreq = {
       enable = true;
@@ -74,7 +74,7 @@ in
     upower.enable = true;
 
     ollama = {
-      enable = mkIf (config.unravelled.profiles.perf.high.enable) true;
+      enable = config.unravelled.profiles.perf.high.enable;
       package = mkDefault pkgs.ollama-vulkan;
     };
   };
@@ -87,7 +87,7 @@ in
 
   hardware = {
     enableRedistributableFirmware = true;
-    graphics = {
+    graphics = mkIf config.unravelled.profiles.graphical.enable {
       enable = true;
       enable32Bit = true;
     };

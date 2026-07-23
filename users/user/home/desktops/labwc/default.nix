@@ -3,6 +3,7 @@
   pkgs,
   osConfig,
   lib,
+  config,
   ...
 }:
 let
@@ -18,7 +19,7 @@ in
     ./conky
   ];
 
-  config = mkIf osConfig.unravelled.options.desktops.labwc.enable {
+  config = mkIf osConfig.unravelled.apps.desktops.labwc.enable {
     home.packages = with pkgs; [
       labwc-menu-generator
       wlr-randr
@@ -99,7 +100,9 @@ in
               "@key" = "W-e";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe' pkgs.xdg-utils "xdg-open"} ~";
+                "@command" = "${getExe' pkgs.gtk3 "gtk-launch"} ${
+                  builtins.elemAt config.xdg.mimeApps.defaultApplications."inode/directory" 0
+                }";
               };
             }
             {
@@ -127,21 +130,21 @@ in
               "@key" = "W-S-b";
               action = {
                 "@name" = "Execute";
-                "@command" = "qs ipc call sidebar toggle";
+                "@command" = "${getExe pkgs.quickshell} ipc call sidebar toggle";
               };
             }
             {
               "@key" = "W-S-s";
               action = {
                 "@name" = "Execute";
-                "@command" = "qs ipc call screenshot screenshotToClipboard";
+                "@command" = "${getExe pkgs.quickshell} ipc call screenshot screenshotToClipboard";
               };
             }
             {
               "@key" = "W-A-s";
               action = {
                 "@name" = "Execute";
-                "@command" = "qs ipc call screenshot screenshotAndUpload";
+                "@command" = "${getExe pkgs.quickshell} ipc call screenshot screenshotAndUpload";
               };
             }
             {

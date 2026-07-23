@@ -183,8 +183,8 @@ let
     Preferences = browserConfig;
   };
 in
-{
-  config = mkIf osConfig.unravelled.options.browsers.firefox.enable {
+{ 
+  config = mkIf osConfig.unravelled.apps.browsers.firefox.enable {
     programs.firefox = {
       enable = true;
 

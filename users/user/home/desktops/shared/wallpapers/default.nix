@@ -1,7 +1,7 @@
 { osConfig, ... }:
 {
   home.file."Pictures/wallpaper" = {
-    source = ./${osConfig.unravelled.options.wallpaper};
+    source = ./${osConfig.unravelled.apps.wallpaper};
     recursive = true;
   };
 }

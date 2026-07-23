@@ -27,8 +27,8 @@ stdenv.mkDerivation rec {
   ];
 
   meta = {
-    description = "Browser-based anonymous YouTube client.";
-    homepage = "https://github.com/user234683/youtube-local";
+    description = "Self-hosted media server";
+    homepage = "https://github.com/uint23/parados";
     platforms = lib.platforms.unix;
   };
 }

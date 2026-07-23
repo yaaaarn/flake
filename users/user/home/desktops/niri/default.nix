@@ -3,7 +3,6 @@
   config,
   pkgs,
   lib,
-  self',
   inputs,
   ...
 }:
@@ -30,9 +29,9 @@ let
 in
 {
   imports =
-    if osConfig.unravelled.options.desktops.niri.enable then [ inputs.niri.homeModules.niri ] else [ ];
+    if osConfig.unravelled.apps.desktops.niri.enable then [ inputs.niri.homeModules.niri ] else [ ];
 
-  config = mkIf osConfig.unravelled.options.desktops.niri.enable {
+  config = mkIf osConfig.unravelled.apps.desktops.niri.enable {
     home.packages = with pkgs; [
       xwayland-satellite
       pantheon.elementary-sound-theme
@@ -296,12 +295,12 @@ in
           };
 
           "Mod+Space".action.spawn = [
-            "${getExe pkgs.rofi}"
+            (getExe pkgs.rofi)
             "-show"
             "drun"
           ];
           "Mod+Shift+E".action.spawn = [
-            "${getExe pkgs.rofimoji}"
+            (getExe pkgs.rofimoji)
             "-a"
             "copy"
             "-r"
@@ -311,16 +310,16 @@ in
 
           "Mod+V".action.toggle-window-floating = { };
 
-          "Mod+Shift+V".action.spawn = [ "${getExe' pkgs.clipcat "clipcat-menu"}" ];
+          "Mod+Shift+V".action.spawn = [ (getExe' pkgs.clipcat "clipcat-menu") ];
 
-          "Mod+T".action.spawn = [ "${getExe pkgs.xdg-terminal-exec}" ];
+          "Mod+T".action.spawn = [ (getExe pkgs.xdg-terminal-exec) ];
           "Mod+F".action.spawn = [
-            "${getExe' pkgs.xdg-utils "xdg-open"}"
+            (getExe' pkgs.xdg-utils "xdg-open")
             "https://"
           ];
           "Mod+E".action.spawn = [
-            "${getExe' pkgs.xdg-utils "xdg-open"}"
-            "${config.home.homeDirectory}"
+            (getExe' pkgs.gtk3 "gtk-launch")
+            "${builtins.elemAt config.xdg.mimeApps.defaultApplications."inode/directory" 0}"
           ];
 
           "Mod+B".action.maximize-column = { };
@@ -369,28 +368,28 @@ in
           "XF86AudioPlay" = {
             allow-when-locked = true;
             action.spawn = [
-              "${getExe pkgs.playerctl}"
+              (getExe pkgs.playerctl)
               "play-pause"
             ];
           };
           "XF86AudioStop" = {
             allow-when-locked = true;
             action.spawn = [
-              "${getExe pkgs.playerctl}"
+              (getExe pkgs.playerctl)
               "stop"
             ];
           };
           "XF86AudioPrev" = {
             allow-when-locked = true;
             action.spawn = [
-              "${getExe pkgs.playerctl}"
+              (getExe pkgs.playerctl)
               "previous"
             ];
           };
           "XF86AudioNext" = {
             allow-when-locked = true;
             action.spawn = [
-              "${getExe pkgs.playerctl}"
+              (getExe pkgs.playerctl)
               "next"
             ];
           };

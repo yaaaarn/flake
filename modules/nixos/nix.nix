@@ -1,8 +1,8 @@
-{ ... }:
+{ lib, ... }:
 {
   nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 14d";
+    automatic = lib.mkDefault true;
+    dates = lib.mkDefault "weekly";
+    options = lib.mkDefault "--delete-older-than 14d";
   };
 }

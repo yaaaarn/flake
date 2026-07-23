@@ -82,8 +82,6 @@ in
     };
   };
 
-  hardware.cpu.intel.microcodePackage = pkgs.microcode-intel;
-
   services.cloudflared = {
     enable = true;
     tunnels = {

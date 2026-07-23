@@ -4,11 +4,12 @@
   pkgs,
   ...
 }:
-with lib;
 let
-  cfg = config.services.qbittorrent;
-  inherit (builtins) concatStringsSep isAttrs isString;
+  inherit (lib) mkEnableOption mkPackageOption mkOption mkIf getExe optionals optionalString escape collect mapAttrsRecursive replaceStrings;
+  inherit (lib.types) types;
   inherit (lib.generators) toINI mkKeyValueDefault mkValueStringDefault;
+  inherit (builtins) concatStringsSep isAttrs isString;
+  cfg = config.services.qbittorrent;
 
   gendeepINI = toINI {
     mkKeyValue =

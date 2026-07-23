@@ -4,8 +4,8 @@
   ...
 }:
 let
-  inherit (lib) mkOption optional;
-  inherit (lib.types) enum listOf str bool;
+  inherit (lib) mkOption mkEnableOption optional;
+  inherit (lib.types) enum listOf str;
 in
 {
   options.unravelled = {
@@ -26,15 +26,7 @@ in
       };
     };
 
-    config = {
-      warnings = optional (config.unravelled.system.users == [ ]) ''
-        You have not added any users to be supported by your system. You may end up with an unbootable system!
-
-        Consider setting {option}`config.unravelled.system.users` in your configuration
-      '';
-    };
-
-    options = {
+    apps = {
       wallpaper = mkOption {
         type = str;
         default = "taiko-10826813.jpg";
@@ -42,40 +34,28 @@ in
       };
 
       desktops = {
-        niri.enable = mkOption {
-          type = bool;
-          default = true;
-        };
+        niri.enable = mkEnableOption "Niri desktop environment";
 
-        labwc.enable = mkOption {
-          type = bool;
-          default = false;
-        };
+        labwc.enable = mkEnableOption "Labwc desktop environment";
       };
 
       browsers = {
-        helium.enable = mkOption {
-          type = bool;
-          default = true;
-        };
+        helium.enable = mkEnableOption "Helium browser";
 
-        firefox.enable = mkOption {
-          type = bool;
-          default = true;
-        };
+        firefox.enable = mkEnableOption "Firefox browser";
       };
 
       editors = {
-        neovim.enable = mkOption {
-          type = bool;
-          default = true;
-        };
+        neovim.enable = mkEnableOption "Neovim editor";
 
-        zed.enable = mkOption {
-          type = bool;
-          default = false;
-        };
+        zed.enable = mkEnableOption "Zed editor";
       };
     };
   };
+
+  config.warnings = optional (config.unravelled.system.users == [ ]) ''
+    You have not added any users to be supported by your system. You may end up with an unbootable system!
+
+    Consider setting {option}`config.unravelled.system.users` in your configuration
+  '';
 }

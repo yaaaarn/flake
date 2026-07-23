@@ -8,11 +8,11 @@ let
   inherit (lib) mkIf optionals;
 in
 {
-  imports = optionals osConfig.unravelled.options.editors.neovim.enable [
+  imports = optionals osConfig.unravelled.apps.editors.neovim.enable [
     inputs.nixvim.homeModules.nixvim
   ];
 
-  config = mkIf osConfig.unravelled.options.editors.neovim.enable {
+  config = mkIf osConfig.unravelled.apps.editors.neovim.enable {
     programs.nixvim = {
       imports = [ ./nixvim.nix ];
 

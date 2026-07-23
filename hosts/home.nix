@@ -24,7 +24,7 @@ in
   );
 
   home-manager = {
-    verbose = true;
+    verbose = false;
     useUserPackages = true;
     useGlobalPkgs = true;
     backupFileExtension = "bak";

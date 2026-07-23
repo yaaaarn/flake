@@ -23,7 +23,6 @@ in
 
     xdg.mimeApps.defaultApplications = {
       "inode/directory" = [ "nemo.desktop" ];
-      "application/x-gnome-saved-search" = [ "nemo.desktop" ];
 
       "application/zip" = [ "file-roller.desktop" ];
       "application/x-tar" = [ "file-roller.desktop" ];

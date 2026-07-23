@@ -32,7 +32,6 @@ in
       ];
 
     programs = {
-      # obsidian.enable = osConfig.unravelled.profiles.full.enable;
       cava.enable = osConfig.unravelled.profiles.full.enable;
     }; 
   };

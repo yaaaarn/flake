@@ -5,10 +5,9 @@
   self',
   ...
 }:
-
-with lib;
-
 let
+  inherit (lib) mkEnableOption mkOption mkIf optional;
+  inherit (lib.types) types;
   cfg = config.services.youtube-local;
   youtube-local-pkg = self'.packages.youtube-local;
 in

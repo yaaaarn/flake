@@ -8,7 +8,7 @@ in
 
     font = "Maple Mono NF CN 9";
     modes = [ "drun" ];
-    terminal = "foot";
+    terminal = "kitty";
 
     extraConfig = {
       show-icons = true;

@@ -5,10 +5,9 @@
   self',
   ...
 }:
-
-with lib;
-
 let
+  inherit (lib) mkEnableOption mkOption mkIf generators concatMapStringsSep concatStringsSep mapAttrsToList;
+  inherit (lib.types) types;
   cfg = config.services.parados;
 
   mkUserConf = name: userOpts: ''

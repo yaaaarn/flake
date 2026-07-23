@@ -88,12 +88,17 @@ in
             perf.mid.enable = true;
             full.enable = true;
           };
-          options = {
+          apps = {
             wallpaper = "reisa-401361.jpg";
             desktops = {
               labwc.enable = true;
               niri.enable = true;
             };
+            browsers = {
+              firefox.enable = true;
+              helium.enable = true;
+            };
+            editors.neovim.enable = true;
           };
         };
       }
@@ -119,12 +124,17 @@ in
             perf.high.enable = true;
             full.enable = true;
           };
-          options = {
+          apps = {
             wallpaper = "IMG_5120-dithered.png";
             desktops = {
               labwc.enable = true;
               niri.enable = true;
             };
+            browsers = {
+              firefox.enable = true;
+              helium.enable = true;
+            };
+            editors.neovim.enable = true;
           };
         };
       }
@@ -140,9 +150,16 @@ in
             perf.low.enable = true;
             minimal.enable = true;
           };
-          options.desktops = {
-            labwc.enable = true;
-            niri.enable = false;
+          apps = {
+            desktops = {
+              labwc.enable = true;
+              niri.enable = false;
+            };
+            browsers = {
+              firefox.enable = true;
+              helium.enable = true;
+            };
+            editors.neovim.enable = true;
           };
         };
       }

@@ -129,7 +129,7 @@ in
 {
   imports = [ inputs.helium.homeModules.default ];
 
-  config = mkIf osConfig.unravelled.options.browsers.helium.enable {
+  config = mkIf osConfig.unravelled.apps.browsers.helium.enable {
     programs.helium = {
       enable = mkIf (!(pkgs.stdenv.isDarwin)) true;
 

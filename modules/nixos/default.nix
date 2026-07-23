@@ -2,7 +2,7 @@
 {
   imports = [
     ./boot.nix
-    ./users
+    ../../users/usergen.nix
 
     # TODO: modularize
     ./system.nix

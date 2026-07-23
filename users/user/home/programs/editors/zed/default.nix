@@ -10,7 +10,7 @@ in
   ];
 
   programs.zed-editor = {
-    enable = mkIf osConfig.unravelled.options.editors.zed.enable true;
+    enable = mkIf osConfig.unravelled.apps.editors.zed.enable true;
 
     extensions = [
       "nix"

@@ -3,7 +3,7 @@ let
   inherit (lib) mkIf;
 in
 {
-  config = mkIf config.unravelled.options.desktops.labwc.enable {
+  config = mkIf config.unravelled.apps.desktops.labwc.enable {
     programs.labwc.enable = mkIf config.unravelled.profiles.graphical.enable true;
   }; 
 }

@@ -105,7 +105,7 @@ in
             "catalognum"
             "barcode"
             "alias"
-            "lavel"
+            "label"
             "country"
           ];
 

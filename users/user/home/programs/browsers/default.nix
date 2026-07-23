@@ -6,8 +6,8 @@
 let
   inherit (lib) mkIf optionals;
 
-  firefoxEnabled = osConfig.unravelled.options.browsers.firefox.enable;
-  heliumEnabled = osConfig.unravelled.options.browsers.helium.enable;
+  firefoxEnabled = osConfig.unravelled.apps.browsers.firefox.enable;
+  heliumEnabled = osConfig.unravelled.apps.browsers.helium.enable;
 
   browser = (if heliumEnabled then "helium" else "firefox");
 in

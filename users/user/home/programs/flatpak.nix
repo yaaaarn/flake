@@ -13,7 +13,7 @@ in
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
   ];
   services.flatpak = {
-    enable = (osConfig.unravelled.profiles.iso.enable != true);
+    enable = !osConfig.unravelled.profiles.iso.enable;
     packages = optionals osConfig.unravelled.profiles.perf.high.enable [
       {
         appId = "org.vinegarhq.Sober";
