@@ -30,5 +30,12 @@
       group = "users";
       mode = "0400";
     };
+
+    "email-password" = {
+      file = "${self}/secrets/email-password.age";
+      owner = config.unravelled.system.mainUser;
+      group = "users";
+      mode = "0400";
+    };
   };
 }

@@ -10,10 +10,16 @@ let
     pocky
     yarnball
   ];
+
+  servers = [
+    bento
+    yarnball
+  ];
 in
 {
 
   "secrets/cloudflare-creds.age".publicKeys = all;
-  "secrets/soju-password.age".publicKeys = all;
+  "secrets/soju-password.age".publicKeys = servers;
   "secrets/ratune-password.age".publicKeys = all;
+  "secrets/email-password.age".publicKeys = all;
 }

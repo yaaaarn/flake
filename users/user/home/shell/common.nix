@@ -44,7 +44,7 @@ in
         lock_timeout = 300;
         pinentry = pkgs.pinentry-gnome3;
       };
-    };
+    }; 
   };
 
   home.packages =

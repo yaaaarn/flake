@@ -19,6 +19,8 @@ let
   cfg = config.services.wbg;
 in
 {
+  meta.maintainers = with lib.maintainers; [ yarn ];
+
   options.services.wbg = {
     enable = mkEnableOption "the super simple wallpaper application for Wayland compositors";
 
@@ -58,13 +60,11 @@ in
       Service = {
         Type = "simple";
         ExecStart = concatStringsSep " " (
-          [ (getExe cfg.package) ]
-          ++ optionals cfg.stretch [ "-s" ]
-          ++ [ cfg.image ]
-          ++ cfg.extraArgs
+          [ (getExe cfg.package) ] ++ optionals cfg.stretch [ "-s" ] ++ [ cfg.image ] ++ cfg.extraArgs
         );
         Restart = "on-failure";
         RestartSec = 5;
+        RestartTriggers = [ (builtins.hashString "sha256" (builtins.toString cfg.image)) ];
       };
       Install = {
         WantedBy = [ "graphical-session.target" ];
