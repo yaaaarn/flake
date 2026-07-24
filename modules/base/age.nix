@@ -23,5 +23,12 @@
       group = "users";
       mode = "0400";
     };
+
+    "ratune-password" = {
+      file = "${self}/secrets/ratune-password.age";
+      owner = config.unravelled.system.mainUser;
+      group = "users";
+      mode = "0400";
+    };
   };
 }

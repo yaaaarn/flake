@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, self, ... }:
 {
-  programs.waybar.settings.mainBar."wlr/taskbar".format = "{icon} {title:.25}";
+  services.wbg.image = "${self}/wallpapers/IMG_5120-dithered.png";
 
   home.packages = with pkgs; [
     steam
     osu-lazer-bin
     prismlauncher
-    lutris 
+    lutris
   ];
 }

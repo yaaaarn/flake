@@ -20,18 +20,18 @@ let
   apps = [
     "^kitty$"
     "^dev.zed.Zed$"
-    "^vesktop$"
-    "^equibop$"
-    "^pcmanfm$"
+    "^nemo$"
   ];
+
+  kb = import ../shared/keybinds.nix { inherit pkgs config; };
 
   inherit (lib) mkIf getExe getExe';
 in
 {
   imports =
-    if osConfig.unravelled.apps.desktops.niri.enable then [ inputs.niri.homeModules.niri ] else [ ];
+    if osConfig.unravelled.desktops.niri.enable then [ inputs.niri.homeModules.niri ] else [ ];
 
-  config = mkIf osConfig.unravelled.apps.desktops.niri.enable {
+  config = mkIf osConfig.unravelled.desktops.niri.enable {
     home.packages = with pkgs; [
       xwayland-satellite
       pantheon.elementary-sound-theme
@@ -66,7 +66,7 @@ in
         layer-rules = [
           {
             matches = [
-              { namespace = "qs-blurred"; }
+              { namespace = "wallpaper"; }
             ];
             place-within-backdrop = true;
           }
@@ -294,33 +294,16 @@ in
             action.toggle-overview = { };
           };
 
-          "Mod+Space".action.spawn = [
-            (getExe pkgs.rofi)
-            "-show"
-            "drun"
-          ];
-          "Mod+Shift+E".action.spawn = [
-            (getExe pkgs.rofimoji)
-            "-a"
-            "copy"
-            "-r"
-            "emoji"
-            "--use-icons"
-          ];
+          "Mod+Space".action.spawn = kb.rofi;
+          "Mod+Shift+E".action.spawn = kb.rofimoji;
 
           "Mod+V".action.toggle-window-floating = { };
 
-          "Mod+Shift+V".action.spawn = [ (getExe' pkgs.clipcat "clipcat-menu") ];
+          "Mod+Shift+V".action.spawn = kb.clipboard;
 
-          "Mod+T".action.spawn = [ (getExe pkgs.xdg-terminal-exec) ];
-          "Mod+F".action.spawn = [
-            (getExe' pkgs.xdg-utils "xdg-open")
-            "https://"
-          ];
-          "Mod+E".action.spawn = [
-            (getExe' pkgs.gtk3 "gtk-launch")
-            "${builtins.elemAt config.xdg.mimeApps.defaultApplications."inode/directory" 0}"
-          ];
+          "Mod+T".action.spawn = kb.terminal;
+          "Mod+F".action.spawn = kb.browser;
+          "Mod+E".action.spawn = kb.fileManager';
 
           "Mod+B".action.maximize-column = { };
 
@@ -340,92 +323,61 @@ in
           "Mod+Shift+Up".action.move-window-up = { };
           "Mod+Shift+Down".action.move-window-down = { };
 
-          "Mod+Shift+B".action.spawn = [
-            (getExe pkgs.quickshell)
-            "ipc"
-            "call"
-            "sidebar"
-            "toggle"
-          ];
-
-          "Mod+Shift+S".action.spawn = [
-            (getExe pkgs.quickshell)
-            "ipc"
-            "call"
-            "screenshot"
-            "screenshotToClipboard"
-          ];
-          "Mod+Alt+S".action.spawn = [
-            (getExe pkgs.quickshell)
-            "ipc"
-            "call"
-            "screenshot"
-            "screenshotAndUpload"
-          ];
+          "Mod+Shift+B".action.spawn = kb.sidebar;
+          "Mod+Shift+S".action.spawn = kb.screenshot;
+          "Mod+Alt+S".action.spawn = kb.screenshotUpload;
 
           "Mod+Shift+P".action.power-off-monitors = { };
 
           "XF86AudioPlay" = {
             allow-when-locked = true;
-            action.spawn = [
-              (getExe pkgs.playerctl)
-              "play-pause"
-            ];
+            action.spawn = kb.playerPlay;
           };
           "XF86AudioStop" = {
             allow-when-locked = true;
-            action.spawn = [
-              (getExe pkgs.playerctl)
-              "stop"
-            ];
+            action.spawn = kb.playerStop;
           };
           "XF86AudioPrev" = {
             allow-when-locked = true;
-            action.spawn = [
-              (getExe pkgs.playerctl)
-              "previous"
-            ];
+            action.spawn = kb.playerPrev;
           };
           "XF86AudioNext" = {
             allow-when-locked = true;
-            action.spawn = [
-              (getExe pkgs.playerctl)
-              "next"
-            ];
+            action.spawn = kb.playerNext;
           };
 
           "XF86AudioRaiseVolume" = {
             allow-when-locked = true;
-            action.spawn-sh = "${getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 0.05+";
+            action.spawn-sh = kb.volumeUp;
           };
           "XF86AudioLowerVolume" = {
             allow-when-locked = true;
-            action.spawn-sh = "${getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 0.05- -l 1.0";
+            action.spawn-sh = kb.volumeDown;
           };
           "XF86AudioMute" = {
             allow-when-locked = true;
-            action.spawn-sh = "${getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+            action.spawn-sh = kb.mute;
           };
           "XF86AudioMicMute" = {
             allow-when-locked = true;
-            action.spawn-sh = "${getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+            action.spawn-sh = kb.micMute;
           };
 
           "XF86MonBrightnessUp" = {
             allow-when-locked = true;
-            action.spawn-sh = "${getExe pkgs.brightnessctl} --class=backlight set +5%";
+            action.spawn-sh = kb.brightnessUp;
           };
           "XF86MonBrightnessDown" = {
             allow-when-locked = true;
-            action.spawn-sh = "${getExe pkgs.brightnessctl} --class=backlight set 5%-";
+            action.spawn-sh = kb.brightnessDown;
           };
           "XF86KbdBrightnessUp" = {
             allow-when-locked = true;
-            action.spawn-sh = "${getExe pkgs.brightnessctl} -d smc::kbd_backlight set +5%";
+            action.spawn-sh = kb.kbdBrightnessUp;
           };
           "XF86KbdBrightnessDown" = {
             allow-when-locked = true;
-            action.spawn-sh = "${getExe pkgs.brightnessctl} -d smc::kbd_backlight set 5%-";
+            action.spawn-sh = kb.kbdBrightnessDown;
           };
         }
         // workspaceBinds;

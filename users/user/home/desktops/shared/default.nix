@@ -1,7 +1,6 @@
 { ... }:
 {
   imports = [
-    ./wallpapers
     ./quickshell
     ./rofi
   ];

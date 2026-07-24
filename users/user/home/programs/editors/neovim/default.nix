@@ -1,18 +1,16 @@
 {
   lib,
   inputs,
-  osConfig,
+  config,
   ...
 }:
 let
-  inherit (lib) mkIf optionals;
+  inherit (lib) mkIf;
 in
 {
-  imports = optionals osConfig.unravelled.apps.editors.neovim.enable [
-    inputs.nixvim.homeModules.nixvim
-  ];
+  imports = [ inputs.nixvim.homeModules.nixvim ];
 
-  config = mkIf osConfig.unravelled.apps.editors.neovim.enable {
+  config = mkIf config.unravelled.apps.editors.neovim.enable {
     programs.nixvim = {
       imports = [ ./nixvim.nix ];
 

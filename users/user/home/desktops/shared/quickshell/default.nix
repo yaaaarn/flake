@@ -3,7 +3,6 @@
   pkgs,
   colors,
   secrets,
-  config,
   ...
 }:
 let
@@ -21,7 +20,6 @@ let
         readonly property string surface: "#${colors.surface}"
         readonly property string foregroundAlt: "#${colors.foreground-alt}"
         readonly property var x: [${xArray}]
-        readonly property string wallpaper: "file://${config.xdg.userDirs.pictures}/wallpaper"
         readonly property string uploadUrl: "${secrets.uploadUrl}"
         readonly property string uploadPassword: "${secrets.uploadPassword}"
     }

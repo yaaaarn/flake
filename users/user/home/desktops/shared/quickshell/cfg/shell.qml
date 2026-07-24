@@ -5,7 +5,6 @@ import QtQuick
 
 import "bar"
 import "notifications"
-import "wallpaper"
 import "widgets"
 import "vars" // qmllint disable import
 
@@ -27,15 +26,6 @@ ShellRoot {
             property var modelData
             property bool controlCenterVisible: false
 
-            WallpaperLayer {
-                id: wallLayer
-                screen: scope.modelData
-                wallpaper: vars.wallpaper // qmllint disable missing-property
-            }
-            BlurredWallpaperLayer {
-                screen: scope.modelData
-                wallpaper: vars.wallpaper  // qmllint disable missing-property
-            }
             CornerOverlay {
                 screen: scope.modelData
             }

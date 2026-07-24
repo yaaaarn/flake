@@ -15,8 +15,6 @@ in
 
     ./hardware-configuration.nix
 
-    ./modules/youtube-local.nix
-
     ./services/minecraft.nix
     ./services/cgit.nix
     ./services/matrix.nix

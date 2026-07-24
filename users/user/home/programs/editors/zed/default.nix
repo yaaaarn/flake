@@ -1,4 +1,4 @@
-{ lib, osConfig, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 let
   inherit (lib) mkIf;
 in
@@ -10,7 +10,7 @@ in
   ];
 
   programs.zed-editor = {
-    enable = mkIf osConfig.unravelled.apps.editors.zed.enable true;
+    enable = mkIf config.unravelled.apps.editors.zed.enable true;
 
     extensions = [
       "nix"

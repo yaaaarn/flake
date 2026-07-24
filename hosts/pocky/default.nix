@@ -1,18 +1,30 @@
-{ pkgs, ... }: {
-  imports = [ ./hardware-configuration.nix ];
+{
+  pkgs,
+  ...
+}:
+{
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
   environment = {
-    systemPackages = with pkgs; [ gpu-switch ];
+    systemPackages = with pkgs; [
+      gpu-switch
+    ];
+
     sessionVariables = {
       LIBVA_DRIVER_NAME = "radeonsi";
       VDPAU_DRIVER = "radeonsi";
     };
   };
+
   swapDevices = [
     {
       device = "/var/lib/swapfile";
       size = 16 * 1024;
     }
   ];
+
   services = {
     logind.settings.Login = {
       HandlePowerKey = "ignore";
@@ -21,19 +33,10 @@
       HandleLidSwitchExternalPower = "ignore";
       HandleLidSwitchDocked = "ignore";
     };
-    mbpfan = {
-      enable = true;
-      aggressive = true;
-      settings = {
-        general = {
-          low_temp = 50;
-          high_temp = 60;
-          max_temp = 75;
-          polling_interval = 1;
-        };
-      };
-    };
+
+    mbpfan.enable = true;
   };
+
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
@@ -49,6 +52,7 @@
       "amdgpu.enable_psr=1"
       "brcmfmac.feature_disable=0x82000"
     ];
+
     kernelModules = [
       "brcmfmac"
       "applesmc"
@@ -56,35 +60,46 @@
       "msr"
     ];
   };
+
   hardware = {
     facetimehd = {
       enable = true;
       withCalibration = true;
     };
+
     cpu.intel.microcodePackage = pkgs.microcode-intel;
+
     amdgpu = {
       initrd.enable = true;
       legacySupport.enable = true;
       opencl.enable = true;
     };
   };
+
   systemd.services.disable-bd-prochot = {
     description = "Disable BD PROCHOT";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "sys-kernel-config.mount" ];
-    path = [
-      pkgs.msr-tools
-      pkgs.kmod
+    wantedBy = [
+      "multi-user.target"
+      "post-resume.target"
     ];
+    after = [
+      "multi-user.target"
+      "post-resume.target"
+    ];
+    path = with pkgs; [ msr-tools ];
+
     script = ''
-      modprobe msr
-      wrmsr -a 0x1FC 0x1e
+      current=$(rdmsr -d 0x1FC)
+      if [ $((current & 1)) -eq 0 ]; then
+        echo "BD PROCHOT already disabled"
+        exit 0
+      fi
+      wrmsr -a 0x1FC $((current & ~1))
     '';
+
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
     };
   };
-
-  unravelled.preservation.enable = true;
 }

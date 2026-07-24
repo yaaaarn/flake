@@ -3,7 +3,7 @@
   self',
   pkgs,
   lib,
-  osConfig,
+  config,
   ...
 }:
 let
@@ -129,7 +129,7 @@ in
 {
   imports = [ inputs.helium.homeModules.default ];
 
-  config = mkIf osConfig.unravelled.apps.browsers.helium.enable {
+  config = mkIf config.unravelled.apps.browsers.helium.enable {
     programs.helium = {
       enable = mkIf (!(pkgs.stdenv.isDarwin)) true;
 

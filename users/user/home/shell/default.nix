@@ -21,8 +21,8 @@ in
     ls = "ls --color=auto";
     edit = "nvim ~/flake";
     clean = "sudo nh clean all --keep 3 && sudo nix-collect-garbage -d";
-    switch = "${getExe pkgs.nh} ${cmd} switch ${flakeDir}";
-    update = "${getExe pkgs.nh} ${cmd} switch ${flakeDir} -u";
+    switch = "git -C ${flakeDir} add . && ${getExe pkgs.nh} ${cmd} switch ${flakeDir}";
+    update = "git -C ${flakeDir} add . && ${getExe pkgs.nh} ${cmd} switch ${flakeDir} -u";
     strip = "${getExe pkgs.exiftool} -all= -overwrite_original";
     open = mkIf (!pkgs.stdenv.isDarwin) "xdg-open";
     reboot = mkIf (!pkgs.stdenv.isDarwin) "systemctl reboot";

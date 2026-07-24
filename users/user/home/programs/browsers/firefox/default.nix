@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  osConfig,
+  config,
   colors,
   inputs,
   ...
@@ -184,7 +184,7 @@ let
   };
 in
 { 
-  config = mkIf osConfig.unravelled.apps.browsers.firefox.enable {
+  config = mkIf config.unravelled.apps.browsers.firefox.enable {
     programs.firefox = {
       enable = true;
 

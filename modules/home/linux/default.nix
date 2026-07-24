@@ -8,8 +8,6 @@ let
   inherit (lib) mkIf getExe;
 in
 {
-  imports = [ ./wallpaper.nix ];
-
   xdg = mkIf osConfig.unravelled.profiles.graphical.enable {
     portal = {
       enable = true;

@@ -63,6 +63,19 @@ in
       };
     };
 
+    ratune = {
+      enable = osConfig.unravelled.profiles.full.enable;
+      server = {
+        url = "http://yarnball.char-ruler.ts.net:4533";
+        username = "catty";
+        passwordFile = "${osConfig.age.secrets.ratune-password.path}";
+      };
+      extraConfig = {
+        player.default_volume = 70;
+        theme.preset = "dynamic";
+      };
+    };
+
     beets = {
       enable = mkDefault osConfig.unravelled.profiles.full.enable;
       package = pkgs.python314Packages.beets.override {

@@ -22,35 +22,14 @@
     // import ./hosts/default.nix { inherit self inputs lib; };
 
   inputs = {
-    nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
-    };
-
-    preservation.url = "github:nix-community/preservation";
-
-    flake-compat = {
-      url = "github:NixOS/flake-compat";
-      flake = false;
-    };
-
     bun2nix = {
       url = "github:nix-community/bun2nix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
       inputs.systems.follows = "systems";
-      inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -115,7 +94,6 @@
     tetro-tui = {
       url = "github:Strophox/tetro-tui";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
       inputs.systems.follows = "systems";
       inputs.rust-overlay.follows = "rust-overlay";
     };
@@ -129,7 +107,6 @@
       url = "github:nix-community/nixvim/main";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
-      inputs.flake-parts.follows = "flake-parts";
     };
 
     nix-flatpak = {
@@ -140,13 +117,11 @@
       url = "github:Infinidoge/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
-      inputs.flake-compat.follows = "flake-compat";
     };
 
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
     };
 
     agenix = {

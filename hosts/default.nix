@@ -59,7 +59,6 @@ let
     baseModules = [
       "${self}/modules/base"
       "${self}/modules/nixos"
-      inputs.preservation.nixosModules.default
       inputs.nix-index-database.nixosModules.default
       { system.configurationRevision = self.rev or self.dirtyRev or "unknown"; }
     ];
@@ -88,17 +87,9 @@ in
             perf.mid.enable = true;
             full.enable = true;
           };
-          apps = {
-            wallpaper = "reisa-401361.jpg";
-            desktops = {
-              labwc.enable = true;
-              niri.enable = true;
-            };
-            browsers = {
-              firefox.enable = true;
-              helium.enable = true;
-            };
-            editors.neovim.enable = true;
+          desktops = {
+            labwc.enable = true;
+            niri.enable = true;
           };
         };
       }
@@ -124,17 +115,9 @@ in
             perf.high.enable = true;
             full.enable = true;
           };
-          apps = {
-            wallpaper = "IMG_5120-dithered.png";
-            desktops = {
-              labwc.enable = true;
-              niri.enable = true;
-            };
-            browsers = {
-              firefox.enable = true;
-              helium.enable = true;
-            };
-            editors.neovim.enable = true;
+          desktops = {
+            labwc.enable = true;
+            niri.enable = true;
           };
         };
       }
@@ -150,16 +133,9 @@ in
             perf.low.enable = true;
             minimal.enable = true;
           };
-          apps = {
-            desktops = {
-              labwc.enable = true;
-              niri.enable = false;
-            };
-            browsers = {
-              firefox.enable = true;
-              helium.enable = true;
-            };
-            editors.neovim.enable = true;
+          desktops = {
+            labwc.enable = true;
+            niri.enable = true;
           };
         };
       }

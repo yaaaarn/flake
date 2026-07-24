@@ -13,13 +13,30 @@ let
     getExe
     getExe'
     ;
+
+  kb = import ../shared/keybinds.nix { inherit pkgs config; };
+
+  workspaceBinds = map (ws: {
+    "@key" = "W-${toString ws}";
+    action = {
+      "@name" = "Desktop";
+      "@command" = toString ws;
+    };
+  }) (lib.range 1 9)
+  ++ map (ws: {
+    "@key" = "W-S-${toString ws}";
+    action = {
+      "@name" = "SendToDesktop";
+      "@command" = toString ws;
+    };
+  }) (lib.range 1 9);
 in
 {
   imports = optionals (!osConfig.unravelled.profiles.laptop.enable) [
     ./conky
   ];
 
-  config = mkIf osConfig.unravelled.apps.desktops.labwc.enable {
+  config = mkIf osConfig.unravelled.desktops.labwc.enable {
     home.packages = with pkgs; [
       labwc-menu-generator
       wlr-randr
@@ -86,65 +103,63 @@ in
               "@key" = "W-t";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe pkgs.xdg-terminal-exec}";
+                "@command" = lib.concatStringsSep " " kb.terminal;
               };
             }
             {
               "@key" = "W-f";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe' pkgs.xdg-utils "xdg-open"} https://";
+                "@command" = lib.concatStringsSep " " kb.browser;
               };
             }
             {
               "@key" = "W-e";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe' pkgs.gtk3 "gtk-launch"} ${
-                  builtins.elemAt config.xdg.mimeApps.defaultApplications."inode/directory" 0
-                }";
+                "@command" = lib.concatStringsSep " " kb.fileManager';
               };
             }
             {
               "@key" = "W-Space";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe pkgs.rofi} -show drun";
+                "@command" = lib.concatStringsSep " " kb.rofi;
               };
             }
             {
               "@key" = "W-S-e";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe pkgs.rofimoji} -a copy -r emoji --use-icons";
+                "@command" = lib.concatStringsSep " " kb.rofimoji;
               };
             }
             {
               "@key" = "W-S-v";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe' pkgs.clipcat "clipcat-menu"}";
+                "@command" = lib.concatStringsSep " " kb.clipboard;
               };
             }
             {
               "@key" = "W-S-b";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe pkgs.quickshell} ipc call sidebar toggle";
+                "@command" = lib.concatStringsSep " " kb.sidebar;
               };
             }
             {
               "@key" = "W-S-s";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe pkgs.quickshell} ipc call screenshot screenshotToClipboard";
+                "@command" = lib.concatStringsSep " " kb.screenshot;
               };
             }
             {
               "@key" = "W-A-s";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe pkgs.quickshell} ipc call screenshot screenshotAndUpload";
+                "@command" = lib.concatStringsSep " " kb.screenshotUpload;
               };
             }
             {
@@ -171,31 +186,48 @@ in
               "@key" = "XF86AudioRaiseVolume";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 0.05+";
+                "@command" = kb.volumeUp;
               };
             }
             {
               "@key" = "XF86AudioLowerVolume";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe' pkgs.wireplumber "wpctl"} set-volume @DEFAULT_AUDIO_SINK@ 0.05- -l 1.0";
+                "@command" = kb.volumeDown;
               };
             }
             {
               "@key" = "XF86AudioMute";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle";
+                "@command" = kb.mute;
               };
             }
             {
               "@key" = "XF86AudioMicMute";
               action = {
                 "@name" = "Execute";
-                "@command" = "${getExe' pkgs.wireplumber "wpctl"} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+                "@command" = kb.micMute;
               };
             }
-          ];
+
+            # workspaces
+            {
+              "@key" = "W-bracketleft";
+              action = {
+                "@name" = "Desktop";
+                "@command" = "previous";
+              };
+            }
+            {
+              "@key" = "W-bracketright";
+              action = {
+                "@name" = "Desktop";
+                "@command" = "next";
+              };
+            }
+          ]
+          ++ workspaceBinds;
         };
       };
 

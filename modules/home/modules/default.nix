@@ -1,5 +1,7 @@
 {
   imports = [
     ./parados
+    ./ratune
+    ./wbg
   ];
 }

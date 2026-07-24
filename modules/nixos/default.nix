@@ -2,7 +2,7 @@
 {
   imports = [
     ./boot.nix
-    ../../users/usergen.nix
+    ./usergen.nix
 
     # TODO: modularize
     ./system.nix
@@ -11,5 +11,6 @@
 
     ./desktops
     ./graphical
+    ./youtube-local.nix
   ];
 }

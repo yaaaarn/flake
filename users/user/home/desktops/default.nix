@@ -3,10 +3,11 @@
   pkgs,
   osConfig,
   inputs,
+  self,
   ...
 }:
 let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
 in
 {
   imports =
@@ -23,6 +24,11 @@ in
     else
       [ ];
 
-  config = mkIf (pkgs.stdenv.isLinux && osConfig.unravelled.profiles.graphical.enable && osConfig.unravelled.profiles.laptop.enable) {
-      };
+  config = mkIf (pkgs.stdenv.isLinux && osConfig.unravelled.profiles.graphical.enable) {
+    services.wbg = {
+      enable = true;
+      stretch = mkDefault true;
+      image = mkDefault "${self}/wallpapers/monst3r-11153458.jpg";
+    };
+  };
 }

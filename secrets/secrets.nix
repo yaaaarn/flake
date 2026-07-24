@@ -15,4 +15,5 @@ in
 
   "secrets/cloudflare-creds.age".publicKeys = all;
   "secrets/soju-password.age".publicKeys = all;
+  "secrets/ratune-password.age".publicKeys = all;
 }
