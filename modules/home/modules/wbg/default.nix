@@ -10,11 +10,12 @@ let
     mkEnableOption
     mkOption
     mkIf
-    concatStringsSep
     getExe
-    optionals
+    optional
+    escapeShellArgs
+    mkPackageOption
+    types
     ;
-  inherit (lib.types) types;
 
   cfg = config.services.wbg;
 in
@@ -22,13 +23,8 @@ in
   meta.maintainers = with lib.maintainers; [ yarn ];
 
   options.services.wbg = {
-    enable = mkEnableOption "the super simple wallpaper application for Wayland compositors";
-
-    package = mkOption {
-      type = types.package;
-      default = pkgs.wbg;
-      description = "The wbg package to use.";
-    };
+    enable = mkEnableOption "wbg, a super simple wallpaper application for Wayland compositors";
+    package = mkPackageOption pkgs "wbg" { };
 
     stretch = mkOption {
       type = types.bool;
@@ -37,8 +33,8 @@ in
     };
 
     image = mkOption {
-      type = types.path;
-      description = "Path to the wallpaper image (required).";
+      type = types.either types.path types.str;
+      description = "Path to the wallpaper image.";
     };
 
     extraArgs = mkOption {
@@ -53,22 +49,24 @@ in
 
     systemd.user.services.wbg = {
       Unit = {
-        Description = "Wayland Wallpaper Application";
-        After = [ "graphical-session.target" ];
-        PartOf = [ "graphical-session.target" ];
+        ConditionEnvironment = "WAYLAND_DISPLAY";
+        Description = "wbg";
+        After = [ config.wayland.systemd.target ];
+        PartOf = [ config.wayland.systemd.target ];
       };
+
       Service = {
-        Type = "simple";
-        ExecStart = concatStringsSep " " (
-          [ (getExe cfg.package) ] ++ optionals cfg.stretch [ "-s" ] ++ [ cfg.image ] ++ cfg.extraArgs
+        ExecStart = escapeShellArgs (
+          [ (getExe cfg.package) ] ++ optional cfg.stretch "-s" ++ [ (toString cfg.image) ] ++ cfg.extraArgs
         );
         Restart = "on-failure";
-        RestartSec = 5;
-        RestartTriggers = [ (builtins.hashString "sha256" (builtins.toString cfg.image)) ];
+        RestartSec = 10;
       };
+
       Install = {
-        WantedBy = [ "graphical-session.target" ];
+        WantedBy = [ config.wayland.systemd.target ];
       };
     };
   };
 }
+

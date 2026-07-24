@@ -1,5 +1,5 @@
 { secrets, osConfig, ... }: {
-  programs.neomutt.enable = true;
+  programs.meli.enable = true;
   programs.mbsync.enable = true;
   services.mbsync.enable = true; # systemd timer (5m)
 
@@ -34,6 +34,15 @@
       trash = "Deleted Messages";
     };
 
-    neomutt.enable = true;
+    meli = {
+      enable = true;
+      mailboxes = [
+        "INBOX"
+        "Archive"
+        "Sent"
+        "Trash"
+        "Drafts"
+      ];
+    };
   };
 }
